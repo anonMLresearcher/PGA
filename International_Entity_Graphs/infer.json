@@ -1,0 +1,68 @@
+{
+  "job_name": "${group_name}_${user_name}_${job_name}_infer_${date}",
+  "ps_type": "ps_plus",
+  "docker_image": "reg.docker.alibaba-inc.com/alimama/tensorflow-cpu:euler2-rc5.2-na63",
+  "dependent_dirs": "${root_dir}",
+  "script": "kgb_sample_runner_infer.py",
+  "worker": {
+    "instance_num": 72,
+    "cpu_cores": 8,
+    "gpu_cores": 0,
+    "memory_m": 25000
+  },
+  "ps": {
+    "instance_num": 96,
+    "cpu_cores": 8,
+    "gpu_cores": 0,
+    "memory_m": 50000
+  },
+  "optimizers": {
+    "scope_optimizer": [
+      {
+        "lr_decay_rate": 1,
+        "name": "Adagrad",
+        "scopes": "",
+        "learning_rate": 0.02
+      }
+    ],
+    "global_optimizer": {
+      "lr_decay_rate": 1,
+      "name": "Adagrad",
+      "learning_rate": 0.02
+    }
+  },
+  "reader": {
+    "reader_type": "my_reader",
+    "batch_size": 1024,
+    "num_epochs": 1
+  },
+  "extend_role": {
+      "euler": {
+        "instance_num": 30,
+      "cpu_cores": 6,
+      "gpu_cores": 0,
+      "memory_m": 25000,
+        "script": "./start_euler_sample.py"
+      }
+  },
+  "checkpoint": {
+      "output_dir": "${model_path}"
+  },
+  "euler": {
+    "zk_addr": "search-zk-na61-alimm-euler.vip.tbsite.net:2181",
+    "data_dir": "${graph_path}",
+    "output_dir": "${output_dir}",
+    "shard_num": 30
+  },
+  "batch_size": 1024,
+  "job_type": "auc",
+  "log_steps": 100,
+  "min_finish_worker_rate": 100,
+  "weight_decay": 0.0,
+  "auc_bucket_num": 5000,
+  "auc_decay_rate": 1.0,
+  "gamma": 5.0,
+  "keep_prob": 1.0,
+  "scheduler_queue": "inter_dev",
+  "use_batch_norm": true
+}
