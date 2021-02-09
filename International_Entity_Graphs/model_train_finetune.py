@@ -35,7 +35,7 @@ gate_th=0.8
 flag_gate_above=True
 same_nation_weight=0.0
 flag_uniform_nation_weight=False
-cate_align_weight=0.01
+cate_align_weight=0.1
  
 print('gm_loss_weight',gm_loss_weight)
 print('flag_dist',flag_dist)

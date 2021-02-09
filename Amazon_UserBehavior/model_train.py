@@ -28,6 +28,7 @@ print('nation',nation_sp)
 print('flag_exp_loss',flag_exp_loss)
 
 
+
 flag_dist = 1.
 flag_RI = 0
 gm_loss_weight = 36.
